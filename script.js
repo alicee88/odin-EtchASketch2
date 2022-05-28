@@ -1,5 +1,4 @@
 const containerDiv = document.querySelector('.container');
-const updateButton = document.querySelector('#submit');
 const gridSizeInput = document.querySelector('#gridsize');
 const colourInput = document.querySelector('#colour');
 const cells = new Array(10000);
@@ -21,12 +20,21 @@ function paint(e) {
 }
 
 function updateGridSize(e) {
-    numberOfCells = gridSizeInput.value;
+    if (gridSizeInput.value < 2) {
+        numberOfCells = 2;
+        gridSizeInput.value = 2;
+    }
+    else if (gridSizeInput.value > 100) {
+        numberOfCells = 100;
+        gridSizeInput.value = 100;
+    }
+    else {
+        numberOfCells = gridSizeInput.value;
+    }
     setupGrid();
 }
 
-updateButton.addEventListener('click', updateGridSize);
-
+gridSizeInput.addEventListener('change', updateGridSize);
 
 
 setupGrid();
