@@ -1,12 +1,15 @@
 const containerDiv = document.querySelector('.container');
-const cells = new Array(256);
-const cellSize = '2rem';
+const updateButton = document.querySelector('#submit');
+const gridSizeInput = document.querySelector('#gridsize');
+const colourInput = document.querySelector('#colour');
+const cells = new Array(10000);
+let numberOfCells = 16;
+
 function setupGrid() {
-    for (let i = 0; i < 256; i++) {
+    containerDiv.textContent = "";
+    containerDiv.style.gridTemplate = `repeat(${numberOfCells}, 1fr) / repeat(${numberOfCells}, 1fr)`;
+    for (let i = 0; i < (numberOfCells * numberOfCells); i++) {
         cells[i] = document.createElement('div');
-        cells[i].style.border = '1px solid black';
-        cells[i].style.height = cellSize;
-        cells[i].style.width = cellSize;
         cells[i].classList.add('cell');
         containerDiv.appendChild(cells[i]);
         cells[i].addEventListener('mouseenter', paint);
@@ -14,7 +17,16 @@ function setupGrid() {
 }
 
 function paint(e) {
-    this.style.backgroundColor = 'coral';
+    this.style.backgroundColor = colourInput.value;
 }
+
+function updateGridSize(e) {
+    numberOfCells = gridSizeInput.value;
+    setupGrid();
+}
+
+updateButton.addEventListener('click', updateGridSize);
+
+
 
 setupGrid();
